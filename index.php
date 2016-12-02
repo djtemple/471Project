@@ -28,7 +28,7 @@ Manmeet Dhaliwal
             }
 
             //sql query
-            $sql = "INSERT INTO names (names) VALUES ('John')";
+            $sql = "INSERT INTO names (names) VALUES ('John')"; //this will not execute if John already exists
             echo "<br><br>Inserting  into db: ";
             if($conn->query($sql)==TRUE){       //try executing the query
                 echo "Query executed<br>";
