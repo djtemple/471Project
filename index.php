@@ -16,7 +16,7 @@ Manmeet Dhaliwal
             $port = "3306";   //database port number
             $username = "jalalkawash";                 //same here
             $password = "leonardmanzara";              //your localhost root password
-            $db = "ebdb";                     //your database name
+            $db = "TextbookExchange";                     //your database name
 
             $conn = new mysqli($servername, $username, $password, $db);
 
@@ -28,7 +28,8 @@ Manmeet Dhaliwal
             }
 
             //sql query
-            $sql = "INSERT INTO names (names) VALUES ('John')"; //this will not execute if John already exists
+            $sql = "INSERT INTO `TextbookExchange`.`User` (`Username`, `Fname`, `Minit`, `Lname`, `Email`, `Rating`, `University_name`) VALUES ('clau', 'Calvin', '?', 'Lau', 'calvin.lau@ucalgary.ca', '5', 'University of Calgary')";
+
             echo "<br><br>Inserting  into db: ";
             if($conn->query($sql)==TRUE){       //try executing the query
                 echo "Query executed<br>";
@@ -38,16 +39,16 @@ Manmeet Dhaliwal
             }
 
             //sql query
-            $sql = "SELECT names FROM names";
+            $sql = "SELECT Username, Fname, Minit, Lname, Email, Rating, University_name FROM `TextbookExchange`.`User`";
             echo "<br><br>Printing names in the (names) table in the (names) column:<br>";
             $result = $conn->query($sql);       //execute the query
 
             if($result->num_rows >0){           //check if query results in more than 0 rows
                 while($row = $result->fetch_assoc()){   //loop until all rows in result are fetched
-                    echo "Name: ".$row["names"]."<br>"; //here we are looking at one row, and printing the value in "names" column
+                    echo "Name: ".$row["Fname"]."<br>"; //here we are looking at one row, and printing the value in "Author" column
                 }
             }
-
+            else{ echo "Could not find values<br>";}
             $conn-> close();            //close the connection to database
         ?>
     </body>
