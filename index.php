@@ -10,7 +10,7 @@ Manmeet Dhaliwal
     </head>
     <body>
 
-      <FORM METHOD="LINK" ACTION="http://sample-env.ahmfnep4a9.us-east-1.elasticbeanstalk.com/register.php">
+      <FORM METHOD="LINK" ACTION="register.php">
       <INPUT TYPE="submit" VALUE="Register">
       </FORM>
 
