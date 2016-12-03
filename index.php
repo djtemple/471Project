@@ -49,7 +49,19 @@ Manmeet Dhaliwal
                 }
             }
             else{ echo "Could not find values<br>";}
+
+            //working on taking user input via forms
+
+
             $conn-> close();            //close the connection to database
         ?>
+
+        <form action="welcome.php" method="post">
+        Name: <input type="text" name="name"><br>
+        E-mail: <input type="text" name="email"><br>
+        <input type="submit">
+        </form>
+
+
     </body>
 </html>
