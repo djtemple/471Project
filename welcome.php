@@ -26,6 +26,10 @@ session_start();
     <INPUT TYPE="submit" VALUE="Post a new ad">
     </FORM>
 
+    <FORM METHOD="LINK" ACTION="message.php">
+    <INPUT TYPE="submit" VALUE="View and send message">
+    </FORM>
+
     <FORM METHOD="LINK" ACTION="edit.php">
     <INPUT TYPE="submit" VALUE="Edit an existing ad">
     </FORM>

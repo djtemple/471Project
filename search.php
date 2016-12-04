@@ -61,7 +61,6 @@ session_start();
        <br><br>
        Author: <input type="text" name="searchAuthor">
        <br><br>
-
        <input type="submit" name="submit" value="Submit">
        </form>
 
@@ -77,6 +76,8 @@ session_start();
          echo "Results:";
          while($row = $result->fetch_assoc()) {
              echo "<br> Ad title: ". $row["adTitle"]. " - Book Title: ". $row["bookTitle". - "Author:". $row["author"]]; //prints a list of matching books
+             //experimental php html usage trying to create a button for each post that is returned from a search
+             
          }
     } else {
          echo "No results found";

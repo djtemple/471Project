@@ -6,13 +6,13 @@ session_start();
 <html>
   <head>
       <meta charset="UTF-8">
-      <title>Ad Creation</title>
+      <title>Ad Viewer</title>
     </head>
   <body>
 
-    <h1>Edit an ad for your textbook:</h1>
+    <h1>View Mode</h1>
     <?php
-      echo $_SESSION['uname'] . " is posting";
+      echo $_SESSION['uname'] . " is viewing a posting";
       if (!isset($_SESSION['uname'])) {
         header("Location: login.php");
       }
@@ -36,20 +36,7 @@ session_start();
       //Let user select which ad to edit
 
     $uname = $_SESSION['uname'];
-    if($uname != ""){
-      $sql = "SELECT adTitle, adID FROM `TextbookExchange`.`advertisement` WHERE posterUname = '$uname'";
-      $result = $conn->query($sql);       //execute the query
 
-      if ($result->num_rows > 0) {
-           // output data of each row
-           echo "Select the id of the ad you want to edit";
-           while($row = $result->fetch_assoc()) {
-               echo "<br> id: ". $row["adID"]. " - Title: ". $row["adTitle"];
-           }
-      } else {
-           echo "You have no ads posted";
-      }
-    }
 
 
     $password = $uname = ""; //cleaning variables post query
@@ -129,6 +116,10 @@ session_start();
 
     <FORM METHOD="LINK" ACTION="welcome.php">
     <INPUT TYPE="submit" VALUE="Back to menu">
+    </FORM>
+
+    <FORM METHOD="LINK" ACTION="search.php">
+    <INPUT TYPE="submit" VALUE="Create another search">
     </FORM>
 
     <FORM METHOD="LINK" ACTION="logout.php">
