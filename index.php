@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <!--
 Manmeet Dhaliwal
@@ -14,8 +18,12 @@ Manmeet Dhaliwal
       <INPUT TYPE="submit" VALUE="Register">
       </FORM>
 
-      <FORM METHOD="LINK" ACTION="placeholder.php">
+      <FORM METHOD="LINK" ACTION="login.php">
       <INPUT TYPE="submit" VALUE="Login">
+      </FORM>
+
+      <FORM METHOD="LINK" ACTION="logout.php">
+      <INPUT TYPE="submit" VALUE="Logout of your profile">
       </FORM>
 
 

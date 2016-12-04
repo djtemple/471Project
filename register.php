@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <!--
 Manmeet Dhaliwal
@@ -28,19 +32,21 @@ Manmeet Dhaliwal
             }
 
         // define variables and set to empty values
-          $name = $email = $gender = $comment = $website = "";
+          $password = $email = $uname = $firstname = $lastname = $universityname = $middleinitial = "";
 
-          if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $uname = test_input($_POST["username"]);
+          if ($_SERVER["REQUEST_METHOD"] == "POST") {   //taking input from html forms
+            $uname = test_input($_POST["uname"]);
             $firstname = test_input($_POST["firstname"]);
             $middleinitial = test_input($_POST["middleinitial"]);
             $lastname = test_input($_POST["lastname"]);
             $email = test_input($_POST["email"]);
             $universityname = test_input($_POST["universityname"]);
+            $password = test_input($_POST["password"]);
+
 
           }
-
-          function test_input($data) {
+          // cleansing input
+          function test_input($data) { //this prevents sql injection 
             $data = trim($data);
             $data = stripslashes($data);
             $data = htmlspecialchars($data);
@@ -62,32 +68,34 @@ Manmeet Dhaliwal
           <br><br>
           Name of University: <input type="text" name="universityname">
           <br><br>
+          Password: <input type="password" name="password">
+          <br><br>
 
           <input type="submit" name="submit" value="Submit">
           </form>
 
         <?php
 
-          echo "<h2>Your Input:</h2>";
-          echo $uname . "<br>";
-          echo $firstname . "<br>";
-          echo $middleinitial;
-          echo "<br>";
-          echo $lastname;
-          echo "<br>";
-          echo $universityname;
-          echo "<br>";
-          $sql = "INSERT INTO `TextbookExchange`.`User` (`Username`, `Fname`, `Minit`, `Lname`, `Email`, `Rating`, `University_name`) VALUES ('$uname', '$firstname', '$middleinitial', '$lastname', '$email', 'null', '$universityname')";
+        //Adding user input to user table
+          $sql = "INSERT INTO `TextbookExchange`.`User` (`Username`, `Fname`, `Minit`, `Lname`, `Email`, `Rating`, `University_name`, `Password`) VALUES ('$uname', '$firstname', '$middleinitial', '$lastname', '$email', '9', '$universityname', '$password')";
           echo "<br><br>Inserting  into db: ";
           if($conn->query($sql)==TRUE){       //try executing the query
               echo "Query executed<br>";
           }
           else{
-              echo "Query did not execute<br>";
+              echo "Error: " . $sql . "<br>" . $conn->error;
           }
+
+
+          $password = $email = $uname = $firstname = $lastname = $universityname = $middleinitial = ""; //cleaning variables post query
           $conn-> close();            //close the connection to database
 
         ?>
+
+
+        <FORM METHOD="LINK" ACTION="login.php">  <!-- navigation buttons-->
+        <INPUT TYPE="submit" VALUE="Continue to Login">
+        </FORM>
 
 
     </body>
