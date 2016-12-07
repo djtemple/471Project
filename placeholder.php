@@ -7,6 +7,7 @@ Manmeet Dhaliwal
     <head>
         <meta charset="UTF-8">
         <title>Hello</title>
+		<link rel="shortcut icon" href="images/icon.ico" />
     </head>
     <body>
         <h1>Demo for 471</h1>

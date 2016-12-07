@@ -10,9 +10,11 @@ Manmeet Dhaliwal
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
+		<link rel="shortcut icon" href="images/icon.ico" />
     </head>
     <body>
-        <h1>Login</h1>
+        <h1 align="center">Login</h1>
+        <center><img src="/images/textbooktrade_small.png" alt="Textbook Trade"></center>
         <?php
 
             // establish connection to database
@@ -47,18 +49,28 @@ Manmeet Dhaliwal
 
         ?>
 
-          <h2>Enter User Info:</h2>  <!-- html 5 form for taking input-->
-          <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-          Username: <input type="text" name="uname">
-          <br><br>
-          Password: <input type="password" name="password">
-          <br><br>
-          <input type="submit" name="submit" value="Submit">
-          </form>
+          <h2 align="center">Enter User Info:</h2>  <!-- html 5 form for taking input-->
+          <div class="login">
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            Username: <input type="text" name="uname">
+            <br><br>
+            Password: <input type="password" name="password">
+            <br><br>
+            <input type="submit" name="submit" value="Submit">
+            </form>
 
-          <FORM METHOD="LINK" ACTION="register.php">
-          <INPUT TYPE="submit" VALUE="Create an account">
-          </FORM>
+			<br><br>
+            <FORM METHOD="LINK" ACTION="register.php">
+            <INPUT TYPE="submit" VALUE="Create an account">
+            </FORM>
+          </div>
+
+          <style type="text/css">
+            .login {
+              text-align: center;
+            }
+          </style>
+
         <?php
 
           if($uname != ""){ //looking for row in user table with matching username and password

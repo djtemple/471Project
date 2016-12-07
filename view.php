@@ -7,6 +7,7 @@ session_start();
   <head>
       <meta charset="UTF-8">
       <title>Ad Viewer</title>
+	  <link rel="shortcut icon" href="images/icon.ico" />
     </head>
   <body>
 

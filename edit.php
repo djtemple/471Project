@@ -102,21 +102,13 @@ session_start();
          if($conn->query($sql)==TRUE){       //try executing the query
              echo "Successfully Edited Posting<br>";
              $validremoved = true;
+             header("Location: edit.php");
+
            }
            else{
              echo "Error: " . $sql . "<br>" . $conn->error;
          }
        }
-     if($adtitle != "" && $validremoved == true){ //make sure this points to correct ad
-        $sql = "INSERT INTO `TextbookExchange`.`advertisement` (`adID`, `adTitle`, `bookTitle`, `Description`, `posterUname`, `author`) VALUES ('$adID', '$adtitle', '$booktitle', '$description', '$poster', '$authorname')";
-        echo "<br><br>Inserting  into db: ";
-        if($conn->query($sql)==TRUE){       //try executing the query
-            echo "New posting added!<br>";
-          }
-          else{
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-      }
 
        $adtitle = $booktitle = $description = $authorname = ""; //cleaning variables post query
        $conn-> close();            //close the connection to database

@@ -1,7 +1,7 @@
 <?php
 session_start();
-unset($_SESSION["uname"]);
-header("Location: login.php");
+unset($_SESSION["uniname"]);
+header("Location: univ.php");
 ?>
 <!DOCTYPE html>
 
@@ -12,7 +12,7 @@ header("Location: login.php");
 	  <link rel="shortcut icon" href="images/icon.ico" />
     </head>
   <body>
-    <h1 align="center">Logging User Out</h1>
+    <h1 align="center">Logging institution out</h1>
 
 
   </body>

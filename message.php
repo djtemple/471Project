@@ -7,10 +7,11 @@ session_start();
   <head>
       <meta charset="UTF-8">
       <title>Messaging</title>
+	  <link rel="shortcut icon" href="images/icon.ico" />
     </head>
   <body>
 
-    <h1>Your Messages</h1>
+    <h1 align="center">Your Messages</h1>
     <?php
       echo $_SESSION['uname'] . " is viewing messages";
       if (!isset($_SESSION['uname'])) {
@@ -56,14 +57,29 @@ session_start();
       }
 
     ?>
-    <h2>Enter Message Details:</h2>  <!-- html 5 form for taking input-->
-    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    Recipient Username: <input type="text" name="recipient_username">
-    <br><br>
-    Message Body: <textarea name="messagebody" rows="5" cols="40"><?php echo $messagebody;?></textarea>
-    <br><br>
-    <input type="submit" name="submit" value="Submit">
-    </form>
+	
+
+    <h2 align="center">Enter Message Details:</h2>  <!-- html 5 form for taking input-->
+	
+	<!-- if redirected to message page from an ad page: -->
+	<?php
+	if (isset($_GET["AdvertId"]) && isset($_GET["AdvertPoster"])) {
+		$i= $_GET["AdvertId"];
+		$p = $_GET["AdvertPoster"];
+		echo "<h2 align='center'>Redirected from: Ad # $i - posted by: $p </h2>";
+	}
+	?>
+	
+    <div class="message">
+      <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+      Recipient Username: <input type="text" name="recipient_username">
+      <br><br>
+      Message Body: <textarea name="messagebody" rows="5" cols="40"><?php echo $messagebody;?></textarea>
+      <br><br>
+      <input type="submit" name="send message" value="Send Message">
+      <br><br>
+      </form>
+
 
 
    <?php
@@ -72,16 +88,19 @@ session_start();
      $sql = "SELECT Sender_username, Content, Timestamp1 FROM `TextbookExchange`.`Message` WHERE Recipient_username = '$uname' ORDER BY Timestamp1 DESC";
      $result = $conn->query($sql);       //execute the query
      $count = 0;
+     echo "Your messages:<br>";
      if ($result->num_rows > 0 && $count < 10) {
           // output data of each row
           $count++;
-          echo "Results:<br>";
+          
           while($row = $result->fetch_assoc()) {
-              echo "<br> Sent from: ". $row["Sender_username"]. " | Content: ". $row["Content"]. " | Sent at: ". $row["Timestamp1"]; //prints all mesages a user has
-
-            }
-    } else {
-        echo "No results found";
+              echo "<br> Sent from: " . $row["Sender_username"]. "<br>"; 
+              echo $row["Content"] . "<br>";
+              echo "Sent at: ". $row["Timestamp1"] . "<br>"; //prints all messages a user has
+          }
+    } 
+    else {
+        echo "You have no messages<br>";
       }
       //sending the message
       if($recipient_username != "" && $messagebody != ""){
@@ -89,6 +108,7 @@ session_start();
       if($conn->query($sql)==TRUE){       //try executing the query
           echo "<br>Message Sent<br>";
           $messagebody = $recipient_username = "";
+		  header("location: message.php"); // testing preventing resend when refresh (exit;???)
         }
         else{
           echo "Error: " . $sql . "<br>" . $conn->error;
@@ -101,18 +121,24 @@ session_start();
 
      ?>
 
+	  <br>
+      <FORM METHOD="LINK" ACTION="welcome.php">
+      <INPUT TYPE="submit" VALUE="Back to menu">
+      </FORM>
+      <br>
+      <FORM METHOD="LINK" ACTION="search.php">
+      <INPUT TYPE="submit" VALUE="Create a search">
+      </FORM>
+      <br>
+      <FORM METHOD="LINK" ACTION="logout.php">
+      <INPUT TYPE="submit" VALUE="Logout of your profile">
+      </FORM>
+    </div>
 
-    <FORM METHOD="LINK" ACTION="welcome.php">
-    <INPUT TYPE="submit" VALUE="Back to menu">
-    </FORM>
-
-    <FORM METHOD="LINK" ACTION="search.php">
-    <INPUT TYPE="submit" VALUE="Create a search">
-    </FORM>
-
-    <FORM METHOD="LINK" ACTION="logout.php">
-    <INPUT TYPE="submit" VALUE="Logout of your profile">
-    </FORM>
-
+    <style type="text/css">
+      .message {
+        text-align: center;
+      }
+    </style>
   </body>
 </html>

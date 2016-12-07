@@ -4,8 +4,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <!--
-Manmeet Dhaliwal
-471 Sample project to show connection to local database
+
 -->
 <html>
     <head>
@@ -20,9 +19,9 @@ Manmeet Dhaliwal
             // establish connection to database
             $servername = "aa6tcu7aup59u3.ccuozd0wfara.us-east-1.rds.amazonaws.com:3306";          //should be same for you
             $port = "3306";   //database port number
-            $username = "jalalkawash";                 //same here
-            $password = "leonardmanzara";              //your localhost root password
-            $db = "TextbookExchange";                     //your database name
+            $username = "jalalkawash";       
+            $password = "leonardmanzara";  
+            $db = "TextbookExchange";   //your database name
 
             $conn = new mysqli($servername, $username, $password, $db);
 
@@ -33,18 +32,13 @@ Manmeet Dhaliwal
             }
 
         // define variables and set to empty values
-          $password = $email = $uname = $firstname = $lastname = $universityname = $middleinitial = "";
+	$instName = $city = $country = $prov = "";
 
           if ($_SERVER["REQUEST_METHOD"] == "POST") {   //taking input from html forms
-            $uname = test_input($_POST["uname"]);
-            $firstname = test_input($_POST["firstname"]);
-            $middleinitial = test_input($_POST["middleinitial"]);
-            $lastname = test_input($_POST["lastname"]);
-            $email = test_input($_POST["email"]);
-            $universityname = test_input($_POST["universityname"]);
-            $password = test_input($_POST["password"]);
-
-
+            $instName = test_input($_POST["instName"]);
+            $city = test_input($_POST["city"]);
+            $country = test_input($_POST["country"]);
+            $prov = test_input($_POST["prov"]);
           }
           // cleansing input
           function test_input($data) { //this prevents sql injection 
@@ -56,22 +50,16 @@ Manmeet Dhaliwal
         ?>
 
         
-        <h2 align="center">Enter User Info:</h2>
+        <h2 align="center">Enter Institution Info:</h2>
         <div class="register">
           <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-          Desired Username: <input type="text" name="uname">
+          Institution name: <input type="text" name="instName">
           <br><br>
-          First Name: <input type="text" name="firstname">
+          City: <input type="text" name="city">
           <br><br>
-          Middle Initial: <input type="text" name="middleinitial">
+          Country: <input type="text" name="country">
           <br><br>
-          Last Name: <input type="text" name="lastname">
-          <br><br>
-          E-mail: <input type="text" name="email">
-          <br><br>
-          Name of University: <input type="text" name="universityname">
-          <br><br>
-          Password: <input type="password" name="password">
+          Province/State: <input type="text" name="prov">
           <br><br>
 
           <input type="submit" name="submit" value="Submit">
@@ -86,8 +74,9 @@ Manmeet Dhaliwal
 
         <?php
 
-        //Adding user input to user table
-          $sql = "INSERT INTO `TextbookExchange`.`User` (`Username`, `Fname`, `Minit`, `Lname`, `Email`, `Rating`, `University_name`, `Password`) VALUES ('$uname', '$firstname', '$middleinitial', '$lastname', '$email', '9', '$universityname', '$password')";
+        //Adding univ input to University table
+        if($instName != "" && $city != "" && $country != "" && $prov != "") {
+          $sql = "INSERT INTO `TextbookExchange`.`University` (`Uname`, `City`, `Country`, `Province`) VALUES ('$instName', '$city', '$country', '$prov')";
           echo "<br><br>Inserting  into db: ";
           if($conn->query($sql)==TRUE){       //try executing the query
               echo "Query executed<br>";
@@ -95,17 +84,23 @@ Manmeet Dhaliwal
           else{
               echo "Error: " . $sql . "<br>" . $conn->error;
           }
+        }
 
-
-          $password = $email = $uname = $firstname = $lastname = $universityname = $middleinitial = ""; //cleaning variables post query
-          $conn-> close();            //close the connection to database
+        //cleaning variables post query
+        $instName = $city = $country = $prov = "";
+        //close the connection to database
+          $conn-> close();            
 
         ?>
 
         <div class="continueLogin">
-          <FORM METHOD="LINK" ACTION="login.php">  <!-- navigation buttons-->
-          <INPUT TYPE="submit" VALUE="Continue to Login">
+          <FORM METHOD="LINK" ACTION="univ.php">  <!-- navigation buttons-->
+          <INPUT TYPE="submit" VALUE="Back to institutions welcome page">
           </FORM>
+		 <br>
+		<FORM METHOD="LINK" ACTION="index.php"> 
+        <INPUT TYPE="submit" VALUE="Back to website home page">
+        </FORM>
         </div>
 
         <style type="text/css">

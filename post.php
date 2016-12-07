@@ -7,10 +7,11 @@ session_start();
   <head>
       <meta charset="UTF-8">
       <title>Ad Creation</title>
+	  <link rel="shortcut icon" href="images/icon.ico" />
     </head>
   <body>
 
-    <h1>Create an ad for your textbook:</h1>
+    <h1 align="center">Create an ad for your textbook:</h1>
     <?php
       echo $_SESSION['uname'] . " is posting";
       if (!isset($_SESSION['uname'])) {
@@ -34,13 +35,14 @@ session_start();
          }
 
      // define variables and set to empty values
-       $adtitle = $booktitle = $description = $authorname = "";
+       $adtitle = $booktitle = $description = $authorname = $isbn = "";
 
        if ($_SERVER["REQUEST_METHOD"] == "POST") {
          $adtitle = test_input($_POST["adtitle"]);
          $booktitle = test_input($_POST["booktitle"]);
          $description = test_input($_POST["description"]);
          $authorname = test_input($_POST["authorname"]);
+		 $isbn = test_input($_POST["isbn"]);
 
        }
        // cleansing input
@@ -52,25 +54,29 @@ session_start();
        }
      ?>
 
-       <h2>Enter the details of your posting:</h2>
+    <div class="post">
+       <h2 align="center">Enter the details of your posting:</h2>
        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-       Ad title: <input type="text" name="adtitle">
+       Ad Title: <input type="text" name="adtitle">
        <br><br>
-       Book title: <input type="text" name="booktitle">
+       Book Title: <input type="text" name="booktitle">
        <br><br>
-       Description: <textarea name="description" rows="5" cols="40"><?php echo $description;?></textarea>
+	   ISBN: <input type="text" name="isbn">
        <br><br>
-       Authors names: <input type="text" name="authorname">
+       Book Description: <textarea name="description" rows="5" cols="40"><?php echo $description;?></textarea>
+       <br><br>
+       Author(s): <input type="text" name="authorname">
        <br><br>
 
-
-       <input type="submit" name="submit" value="Submit">
+       <input type="submit" name="post ad" value="Post Ad">
        </form>
+       <br>
+
 
     <?php
       $poster = $_SESSION['uname'];
      if($adtitle != ""){
-        $sql = "INSERT INTO `TextbookExchange`.`advertisement` (`adTitle`, `bookTitle`, `Description`, `posterUname`, `author`) VALUES ('$adtitle', '$booktitle', '$description', '$poster', '$author')";
+        $sql = "INSERT INTO `TextbookExchange`.`advertisement` (`adTitle`, `bookTitle`, `Description`, `posterUname`, `author`, `ISBN`) VALUES ('$adtitle', '$booktitle', '$description', '$poster', '$authorname', '$isbn')";
         echo "<br><br>Inserting  into db: ";
         if($conn->query($sql)==TRUE){       //try executing the query
             echo "Ad Posted!<br>";
@@ -80,22 +86,29 @@ session_start();
         }
       }
 
-       $adtitle = $booktitle = $description = $authorname = ""; //cleaning variables post query
+       $adtitle = $booktitle = $description = $authorname = $isbn = ""; //cleaning variables post query
        $conn-> close();            //close the connection to database
 
      ?>
+		<br><br><br>
+      <FORM METHOD="LINK" ACTION="edit.php">
+      <INPUT TYPE="submit" VALUE="Edit an existing ad">
+      </FORM>
+      <br>
+      <FORM METHOD="LINK" ACTION="welcome.php">
+      <INPUT TYPE="submit" VALUE="Back to menu">
+      </FORM>
+      <br>
+      <FORM METHOD="LINK" ACTION="logout.php">
+      <INPUT TYPE="submit" VALUE="Logout of your profile">
+      </FORM>
+    </div>
 
-    <FORM METHOD="LINK" ACTION="edit.php">
-    <INPUT TYPE="submit" VALUE="Edit an existing ad">
-    </FORM>
-
-    <FORM METHOD="LINK" ACTION="welcome.php">
-    <INPUT TYPE="submit" VALUE="Back to menu">
-    </FORM>
-
-    <FORM METHOD="LINK" ACTION="logout.php">
-    <INPUT TYPE="submit" VALUE="Logout of your profile">
-    </FORM>
+    <style type="text/css">
+      .post {
+        text-align: center;
+      }
+    </style>
 
   </body>
 </html>
